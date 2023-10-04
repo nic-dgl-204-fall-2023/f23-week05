@@ -1,17 +1,18 @@
 package smartapp
 
-open class SmartDevice (val name: String, val category: String) {
+import enums.*
 
-    var deviceStatus = "online"
+sealed class SmartDevice (val name: String, val category: DeviceCategory) {
+    var deviceStatus = Status.ONLINE
         protected set
 
-    open val deviceType: String = "unknown"
+    open val deviceType = SmartDeviceType.UNKNOWN
 
     open fun turnOn() {
-        deviceStatus = "on"
+        deviceStatus = Status.ON
     }
 
     open fun turnOff() {
-        deviceStatus = "off"
+        deviceStatus = Status.OFF
     }
 }

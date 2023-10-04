@@ -1,44 +1,51 @@
 package smartapp
 
-class SmartHome(val smartTvDevice: SmartTvDevice, val smartLightDevice: SmartLightDevice) {
+import data.User
+import enums.DeviceCategory
 
-    var deviceTurnOnCount = 0
-        private set
+class SmartHome() {
 
-    fun turnOnTv() {
-        deviceTurnOnCount++
-        smartTvDevice.turnOn()
-    }
+    companion object {
+        val smartTvDevice = SmartTvDevice(deviceName = "Android TV", deviceCategory = DeviceCategory.ENTERTAINMENT, user = User("Ashley", 1, 10))
+        val smartLightDevice = SmartLightDevice(deviceName = "Google light", deviceCategory = DeviceCategory.UTILITY)
+        var deviceTurnOnCount = 0
+            private set
 
-    fun turnOffTv() {
-        deviceTurnOnCount--
-        smartTvDevice.turnOff()
-    }
+        fun turnOnTv() {
+            deviceTurnOnCount++
+            smartTvDevice.turnOn()
+        }
 
-    fun increaseTvVolume() {
-        smartTvDevice.increaseSpeakerVolume()
-    }
+        fun turnOffTv() {
+            deviceTurnOnCount--
+            smartTvDevice.turnOff()
+        }
 
-    fun changeTvChannelToNext() {
-        smartTvDevice.nextChannel()
-    }
+        fun increaseTvVolume() {
+            smartTvDevice.increaseSpeakerVolume()
+        }
 
-    fun turnOnLight() {
-        deviceTurnOnCount++
-        smartLightDevice.turnOn()
-    }
+        fun changeTvChannelToNext() {
+            smartTvDevice.nextChannel()
+        }
 
-    fun turnOffLight() {
-        deviceTurnOnCount--
-        smartLightDevice.turnOff()
-    }
+        fun turnOnLight() {
+            deviceTurnOnCount++
+            smartLightDevice.turnOn()
+        }
 
-    fun increaseLightBrightness() {
-        smartLightDevice.increaseBrightness()
-    }
+        fun turnOffLight() {
+            deviceTurnOnCount--
+            smartLightDevice.turnOff()
+        }
 
-    fun turnOffAllDevices() {
-        turnOffTv()
-        turnOffLight()
+        fun increaseLightBrightness() {
+            smartLightDevice.increaseBrightness()
+        }
+
+        fun turnOffAllDevices() {
+            turnOffTv()
+            turnOffLight()
+        }
     }
 }

@@ -1,30 +1,20 @@
 package smartapp
 
-class SmartTvDevice(deviceName: String, deviceCategory: String) :
-    SmartDevice(name = deviceName, category = deviceCategory) {
+import data.User
+import data.UserRepository
+import enums.DeviceCategory
+import enums.SmartDeviceType
+import util.RangeRegulator
 
-    override val deviceType: String = "Smart TV"
+class SmartTvDevice(deviceName: String, deviceCategory: DeviceCategory, user: User?) :
+    SmartDevice(name = deviceName, category = deviceCategory),
+    UserRepository {
 
-    private var speakerVolume = 2
-        get() {
-            return field
-        }
+    override val deviceType = SmartDeviceType.TV
+    val user = user
 
-        set(value) {
-            if (value in 0..100) {
-                field = value
-            }
-        }
-    private var channelNumber = 1
-        get() {
-            return field
-        }
-
-        set(value) {
-            if (value in 0..200) {
-                field = value
-            }
-        }
+    private var speakerVolume by RangeRegulator(initialValue = 2, minValue = 0, maxValue = 100)
+    private var channelNumber by RangeRegulator(initialValue = user?.channelNumber ?: 2, minValue = 0, maxValue = 200)
 
     override fun turnOn() {
         super.turnOn()
@@ -36,6 +26,7 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
 
     override fun turnOff() {
         super.turnOff()
+        updateUser(channelNumber)
         println("$name turned off")
     }
 
@@ -47,6 +38,11 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
     fun nextChannel() {
         channelNumber++
         println("Channel number increased to $channelNumber.")
+    }
+
+    override fun updateUser(channelNumber: Int?): User? {
+        user?.channelNumber = channelNumber
+        return user
     }
 }
 
